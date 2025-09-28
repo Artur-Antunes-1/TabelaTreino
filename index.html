@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Biblioteca para gerar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -30,7 +32,7 @@
                 padding: 1in;
             }
             .no-print {
-                display: none;
+                display: none !important;
             }
         }
     </style>
@@ -38,6 +40,14 @@
 <body class="bg-gray-100">
 
     <div class="page bg-white">
+        
+        <!-- Botão de Download -->
+        <div class="flex justify-between items-start mb-8 no-print">
+            <div></div> <!-- Espaçador -->
+            <button id="download-btn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
+                Baixar como PDF
+            </button>
+        </div>
 
         <!-- Título Principal -->
         <header class="text-center mb-10">
@@ -173,7 +183,7 @@
              
              <!-- Tabela Dia 1 -->
             <div class="mb-8 overflow-x-auto">
-                <h3 class="text-2xl font-semibold text-gray-700 mb-3">Dia 1: Peito e Ombros 💪 <span class="text-lg font-medium text-gray-500">(Foco em Hipertrofia)</span></h3>
+                <h3 class="text-2xl font-semibold text-gray-700 mb-3">Dia 1 #2: Peito e Ombros 💪 <span class="text-lg font-medium text-gray-500">(Foco em Hipertrofia)</span></h3>
                 <table class="min-w-full bg-white rounded-lg shadow-md">
                     <thead class="bg-gray-200 text-gray-600">
                         <tr>
@@ -195,7 +205,7 @@
 
             <!-- Tabela Dia 2 -->
             <div class="mb-8 overflow-x-auto">
-                <h3 class="text-2xl font-semibold text-gray-700 mb-3">Dia 2: Costas e Lombar 🦅 <span class="text-lg font-medium text-gray-500">(Foco em Largura)</span></h3>
+                <h3 class="text-2xl font-semibold text-gray-700 mb-3">Dia 2 #2: Costas e Lombar 🦅 <span class="text-lg font-medium text-gray-500">(Foco em Largura)</span></h3>
                 <table class="min-w-full bg-white rounded-lg shadow-md">
                      <thead class="bg-gray-200 text-gray-600">
                         <tr>
@@ -217,7 +227,7 @@
 
             <!-- Tabela Dia 3 -->
             <div class="mb-8 overflow-x-auto">
-                <h3 class="text-2xl font-semibold text-gray-700 mb-3">Dia 3: Pernas 🦵 <span class="text-lg font-medium text-gray-500">(Variações)</span></h3>
+                <h3 class="text-2xl font-semibold text-gray-700 mb-3">Dia 3 #2: Pernas 🦵 <span class="text-lg font-medium text-gray-500">(Variações)</span></h3>
                 <table class="min-w-full bg-white rounded-lg shadow-md">
                      <thead class="bg-gray-200 text-gray-600">
                         <tr>
@@ -241,7 +251,7 @@
 
              <!-- Tabela Dia 4 -->
             <div class="mb-8 overflow-x-auto">
-                <h3 class="text-2xl font-semibold text-gray-700 mb-3">Dia 4: Braços e Abdômen 🦾 <span class="text-lg font-medium text-gray-500">(Variações)</span></h3>
+                <h3 class="text-2xl font-semibold text-gray-700 mb-3">Dia 4 #2: Braços e Abdômen 🦾 <span class="text-lg font-medium text-gray-500">(Variações)</span></h3>
                 <table class="min-w-full bg-white rounded-lg shadow-md">
                     <thead class="bg-gray-200 text-gray-600">
                         <tr>
@@ -265,5 +275,26 @@
 
     </div>
 
+    <script>
+        document.getElementById('download-btn').addEventListener('click', function () {
+            const element = document.querySelector('.page');
+            const opt = {
+                margin:       0.5,
+                filename:     'plano_de_treino.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            // Esconde o botão antes de gerar o PDF
+            document.getElementById('download-btn').style.display = 'none';
+            
+            html2pdf().from(element).set(opt).save().then(() => {
+                // Mostra o botão novamente depois que o PDF for salvo
+                document.getElementById('download-btn').style.display = 'block';
+            });
+        });
+    </script>
+
 </body>
 </html>
+
